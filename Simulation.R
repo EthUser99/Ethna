@@ -6,7 +6,7 @@ library(optimbase)
 listOfTransactions <- data.frame(id=integer(), source=integer(), destination=integer(), value=integer(),
                                  t0=integer(), tEnd=integer())
 currentTransactions<-data.frame(listOfTransactions, parent=integer(),waiting= logical(),realized = numeric(),
-                             arrity = integer(), Id0 = numeric(), done = logical())
+                             arity = integer(), Id0 = numeric(), done = logical())
 realizedTransactions <- data.frame(listOfTransactions, vmax=numeric())
 nrounds <- 100
 graphThroughput 
@@ -111,7 +111,7 @@ for (n in (1:nrounds)){
         if(parent==0){
           
         } else {
-          currentTransactions[parent,]$arrity <- currentTransactions[parent,]$arrity - 1
+          currentTransactions[parent,]$arity <- currentTransactions[parent,]$arity - 1
           currentTransactions[parent,]$blocked <- currentTransactions[parent,]$blocked - (realized+blocked)
           currentTransactions[id,]$done <- 1
           locked[source,neigh]=1
@@ -133,7 +133,7 @@ for (n in (1:nrounds)){
             locked[source, neigh_paths[k]] <- 1
           }
         }
-        currentTransactions[id,]$arrity <- currentTransactions[id,]$arrity + j - 1
+        currentTransactions[id,]$arity <- currentTransactions[id,]$arity + j - 1
         currentTransactions[id,]$blocked <- currentTransactions[id,]$blocked + min((value-(blocked+realized)), sum(values_paths))
        }
     }
